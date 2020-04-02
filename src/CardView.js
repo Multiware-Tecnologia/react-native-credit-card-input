@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import {
   View,
-  ImageBackground,
   Image,
   Text,
   StyleSheet,
@@ -73,6 +72,10 @@ const s = StyleSheet.create({
     top: 80,
     right: 30,
   },
+  cardStyle:{
+    backgroundColor: "#3816d4",
+    borderRadius: 10
+  }
 });
 
 /* eslint react/prop-types: 0 */ // https://github.com/yannickcr/eslint-plugin-react/issues/106
@@ -133,8 +136,7 @@ export default class CardView extends Component {
           perspective={2000}
           clickable={false}
           flip={shouldFlip}>
-          <ImageBackground style={[BASE_SIZE, s.cardFace, transform]}
-            source={imageFront}>
+          <View style={[BASE_SIZE, s.cardFace, transform]}>
               <Image style={[s.icon]}
                 source={Icons[brand]} />
               <Text style={[s.baseText, { fontFamily }, s.number, !number && s.placeholder, focused === "number" && s.focused]}>
@@ -142,10 +144,10 @@ export default class CardView extends Component {
               </Text>
               <Text style={[s.baseText, { fontFamily }, s.name, !name && s.placeholder, focused === "name" && s.focused]}
                 numberOfLines={1}>
-                { !name ? placeholder.name : name.toUpperCase() }
+                { !name ? 'NOME COMPLETO' : name.toUpperCase() }
               </Text>
               <Text style={[s.baseText, { fontFamily }, s.expiryLabel, s.placeholder, focused === "expiry" && s.focused]}>
-                MONTH/YEAR
+                MêS/ANO
               </Text>
               <Text style={[s.baseText, { fontFamily }, s.expiry, !expiry && s.placeholder, focused === "expiry" && s.focused]}>
                 { !expiry ? placeholder.expiry : expiry }
@@ -154,13 +156,12 @@ export default class CardView extends Component {
                   <Text style={[s.baseText, { fontFamily }, s.amexCVC, !cvc && s.placeholder, focused === "cvc" && s.focused]}>
                     { !cvc ? placeholder.cvc : cvc }
                   </Text> }
-          </ImageBackground>
-          <ImageBackground style={[BASE_SIZE, s.cardFace, transform]}
-            source={imageBack}>
+          </View>
+          <View style={[BASE_SIZE, s.cardFace, transform]}>
               <Text style={[s.baseText, s.cvc, !cvc && s.placeholder, focused === "cvc" && s.focused]}>
                 { !cvc ? placeholder.cvc : cvc }
               </Text>
-          </ImageBackground>
+          </View>
         </FlipCard>
       </View>
     );
