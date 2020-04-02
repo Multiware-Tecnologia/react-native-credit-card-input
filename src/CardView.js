@@ -29,11 +29,10 @@ const s = StyleSheet.create({
     backgroundColor: "transparent",
   },
   placeholder: {
-    color: "rgba(255, 255, 255, 0.5)",
+    //color: "rgba(255, 255, 255, 0.5)",
   },
   focused: {
     fontWeight: "bold",
-    color: "rgba(255, 255, 255, 1)",
   },
   number: {
     fontSize: 21,
@@ -72,13 +71,37 @@ const s = StyleSheet.create({
     top: 80,
     right: 30,
   },
-  cardStyle:{
-    backgroundColor: "#3816d4",
+  cardFrontStyle:{
     borderRadius: 10
+  },
+  cardBacktStyleBlack:{
+    height: 40,
+    width: '100%',
+    backgroundColor: '#000000',
+    position: 'absolute',
+    top: 30
+  },
+  cardBacktStyleWhite:{
+    height: 30,
+    width: 40,
+    backgroundColor: '#ffffff',
+    position: 'absolute',
+    top: 75,
+    right: 65
+  },
+  cardBacktStyle:{
+    borderRadius: 10
+  },
+  titleCard:{
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#fff',
+    position: 'absolute',
+    top: 20,
+    left: 30
   }
 });
 
-/* eslint react/prop-types: 0 */ // https://github.com/yannickcr/eslint-plugin-react/issues/106
 export default class CardView extends Component {
   static propTypes = {
     focused: PropTypes.string,
@@ -89,7 +112,6 @@ export default class CardView extends Component {
     expiry: PropTypes.string,
     cvc: PropTypes.string,
     placeholder: PropTypes.object,
-
     scale: PropTypes.number,
     fontFamily: PropTypes.string,
     customIcons: PropTypes.object,
@@ -100,10 +122,9 @@ export default class CardView extends Component {
     placeholder: {
       number: "•••• •••• •••• ••••",
       name: "FULL NAME",
-      expiry: "••/••",
+      expiry: "••/••••",
       cvc: "•••",
     },
-
     scale: 1,
     fontFamily: Platform.select({ ios: "Courier", android: "monospace" }),
   };
@@ -111,7 +132,7 @@ export default class CardView extends Component {
   render() {
     const { focused,
       brand, name, number, expiry, cvc, customIcons,
-      placeholder, scale, fontFamily } = this.props;
+      placeholder, scale, fontFamily, frontCardColor, backCardColor, textCardColor, focusCardColor} = this.props;
 
     const Icons = { ...defaultIcons, ...customIcons };
     const isAmex = brand === "american-express";
@@ -132,29 +153,36 @@ export default class CardView extends Component {
           perspective={2000}
           clickable={false}
           flip={shouldFlip}>
-          <View style={[BASE_SIZE, s.cardFace, transform]}>
+          <View style={[BASE_SIZE, s.cardFace, transform, s.cardFrontStyle, {
+            backgroundColor: frontCardColor
+          }]}>
+              <Text style={[s.titleCard, { color: textCardColor}]}>CARTÃO DE CRÉDITO</Text>
               <Image style={[s.icon]}
                 source={Icons[brand]} />
-              <Text style={[s.baseText, { fontFamily }, s.number, !number && s.placeholder, focused === "number" && s.focused]}>
+              <Text style={[s.baseText, { fontFamily, color: textCardColor}, s.number, !number && s.placeholder, focused === "number" && { color: focusCardColor, fontWeight: 'bold'}]}>
                 { !number ? placeholder.number : number }
               </Text>
-              <Text style={[s.baseText, { fontFamily }, s.name, !name && s.placeholder, focused === "name" && s.focused]}
+              <Text style={[s.baseText, { fontFamily, color: textCardColor}, s.name, !name && s.placeholder, focused === "name" && { color: focusCardColor, fontWeight: 'bold'}]}
                 numberOfLines={1}>
                 { !name ? 'NOME COMPLETO' : name.toUpperCase() }
               </Text>
-              <Text style={[s.baseText, { fontFamily }, s.expiryLabel, s.placeholder, focused === "expiry" && s.focused]}>
+              <Text style={[s.baseText, { fontFamily, color: textCardColor}, s.expiryLabel, s.placeholder, focused === "expiry" && { color: focusCardColor, fontWeight: 'bold'}]}>
                 MÊS/ANO
               </Text>
-              <Text style={[s.baseText, { fontFamily }, s.expiry, !expiry && s.placeholder, focused === "expiry" && s.focused]}>
+              <Text style={[s.baseText, { fontFamily, color: textCardColor}, s.expiry, !expiry && s.placeholder, focused === "expiry" && { color: focusCardColor, fontWeight: 'bold'}]}>
                 { !expiry ? placeholder.expiry : expiry }
               </Text>
               { isAmex &&
-                  <Text style={[s.baseText, { fontFamily }, s.amexCVC, !cvc && s.placeholder, focused === "cvc" && s.focused]}>
+                  <Text style={[s.baseText, { fontFamily, color: textCardColor}, s.amexCVC, !cvc && s.placeholder, focused === "cvc" && { color: focusCardColor, fontWeight: 'bold'}]}>
                     { !cvc ? placeholder.cvc : cvc }
                   </Text> }
           </View>
-          <View style={[BASE_SIZE, s.cardFace, transform]}>
-              <Text style={[s.baseText, s.cvc, !cvc && s.placeholder, focused === "cvc" && s.focused]}>
+          <View style={[BASE_SIZE, s.cardFace, transform, s.cardBacktStyle, {
+            backgroundColor: backCardColor
+          }]}>
+              <View style={s.cardBacktStyleBlack}/>
+              <View style={s.cardBacktStyleWhite}/>
+              <Text style={[s.baseText, s.cvc, !cvc && s.placeholder, focused === "cvc" && { color: focusCardColor, fontWeight: 'bold'}]}>
                 { !cvc ? placeholder.cvc : cvc }
               </Text>
           </View>

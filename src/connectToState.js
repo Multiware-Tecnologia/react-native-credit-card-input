@@ -15,6 +15,10 @@ export const InjectedProps = {
   requiresName: PropTypes.bool,
   requiresCVC: PropTypes.bool,
   requiresPostalCode: PropTypes.bool,
+  frontCardColor: PropTypes.string, 
+  backCardColor: PropTypes.string,
+  textCardColor: PropTypes.string,
+  focusCardColor: PropTypes.string
 };
 
 export default function connectToState(CreditCardInput) {
@@ -27,6 +31,10 @@ export default function connectToState(CreditCardInput) {
       requiresCVC: PropTypes.bool,
       requiresPostalCode: PropTypes.bool,
       validatePostalCode: PropTypes.func,
+      frontCardColor: PropTypes.string, 
+      backCardColor: PropTypes.string,
+      textCardColor: PropTypes.string,
+      focusCardColor: PropTypes.string
     };
 
     static defaultProps = {
