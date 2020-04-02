@@ -92,8 +92,6 @@ export default class CardView extends Component {
 
     scale: PropTypes.number,
     fontFamily: PropTypes.string,
-    imageFront: PropTypes.number,
-    imageBack: PropTypes.number,
     customIcons: PropTypes.object,
   };
 
@@ -108,14 +106,12 @@ export default class CardView extends Component {
 
     scale: 1,
     fontFamily: Platform.select({ ios: "Courier", android: "monospace" }),
-    imageFront: require("../images/card-front.png"),
-    imageBack: require("../images/card-back.png"),
   };
 
   render() {
     const { focused,
       brand, name, number, expiry, cvc, customIcons,
-      placeholder, imageFront, imageBack, scale, fontFamily } = this.props;
+      placeholder, scale, fontFamily } = this.props;
 
     const Icons = { ...defaultIcons, ...customIcons };
     const isAmex = brand === "american-express";

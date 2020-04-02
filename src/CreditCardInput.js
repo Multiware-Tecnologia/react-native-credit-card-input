@@ -56,8 +56,6 @@ export default class CreditCardInput extends Component {
     invalidColor: PropTypes.string,
     placeholderColor: PropTypes.string,
 
-    cardImageFront: PropTypes.number,
-    cardImageBack: PropTypes.number,
     cardScale: PropTypes.number,
     cardFontFamily: PropTypes.string,
     cardBrandIcons: PropTypes.object,
@@ -141,7 +139,7 @@ export default class CreditCardInput extends Component {
 
   render() {
     const {
-      cardImageFront, cardImageBack, inputContainerStyle,
+      inputContainerStyle,
       values: { number, expiry, cvc, name, type }, focused,
       allowScroll, requiresName, requiresCVC, requiresPostalCode,
       cardScale, cardFontFamily, cardBrandIcons,
@@ -153,8 +151,6 @@ export default class CreditCardInput extends Component {
           brand={type}
           scale={cardScale}
           fontFamily={cardFontFamily}
-          imageFront={cardImageFront}
-          imageBack={cardImageBack}
           customIcons={cardBrandIcons}
           name={requiresName ? name : " "}
           number={number}
