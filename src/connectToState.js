@@ -84,8 +84,8 @@ export default function connectToState(CreditCardInput) {
       return compact([
         "number",
         "expiry",
-        requiresCVC ? "cvc" : null,
-        requiresName ? "name" : null,
+        "cvc",
+        "name",
         requiresPostalCode ? "postalCode" : null,
       ]);
     };
